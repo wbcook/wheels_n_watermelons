@@ -23,4 +23,7 @@ class Project
   def difference
     @goal - @funds
   end
+  def funded?
+    difference <= 0
+  end
 end
