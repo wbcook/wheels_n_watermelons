@@ -1,6 +1,8 @@
 # A fundraising app that tracks the funding of various odd projects. Now with encapsulation
 # and a Fundraising class to manage lists of proejects and their collections.
 require_relative 'project'
+require_relative 'die'
+
 class Fundraiser
   def initialize(title)
     @title = title
@@ -12,13 +14,18 @@ class Fundraiser
   def collect
     puts @projects
     @projects.each do |project|
-      project.loan
+      die = Die.new
+      case die.roll
+      when 1..2
+        project.loan
+        project.loan
+      when 2..3
+        puts "#{project.name} was skipped!"
+      else
+        project.loan
+      end
       project.expirer
+      puts "#{project.name} is fully funded!" if project.funded?
     end
-    @projects.each do |project|
-      puts project unless project.difference <= 0
-      puts "#{project.name} is fully funded with $#{project.funds}, hooray!" if project.difference <= 0
-    end
-    puts "#{@title}".center(45, '*')
   end
 end
