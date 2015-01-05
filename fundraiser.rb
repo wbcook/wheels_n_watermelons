@@ -2,6 +2,7 @@
 # and a Fundraising class to manage lists of proejects and their collections.
 require_relative 'project'
 require_relative 'die'
+require_relative 'funding_round'
 
 class Fundraiser
   def initialize(title)
@@ -14,16 +15,7 @@ class Fundraiser
   def collect
     puts @projects
     @projects.each do |project|
-      die = Die.new
-      case die.roll
-      when 1..2
-        project.loan
-        project.loan
-      when 2..3
-        puts "#{project.name} was skipped!"
-      else
-        project.loan
-      end
+      FundingRound.funding_round(project)
       project.expirer
       puts "#{project.name} is fully funded!" if project.funded?
     end
