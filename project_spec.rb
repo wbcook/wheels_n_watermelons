@@ -36,4 +36,17 @@ describe Project do
     @project.expirer
     @project.expire.should == @initial_expire - 1
   end
+  context "in a collection of projects" do
+    before do
+      @project1 = Project.new("wheels", 100, 200, 30)
+      @project2 = Project.new("watermelons", 125, 200, 30)
+      @project3 = Project.new("cattle", 150, 200, 30)
+
+      @projects = [@project1, @project2, @project3]
+    end
+
+    it "is sorted by decreasing funding" do
+      @projects.sort.should == [@project3, @project2, @project1]
+    end
+  end
 end

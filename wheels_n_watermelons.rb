@@ -12,6 +12,6 @@ agriculture = Fundraiser.new("Agriculture")
 agriculture.add_project(wheels)
 agriculture.add_project(watermelons)
 agriculture.add_project(alpacas)
-agriculture.collect
+agriculture.collect(2)
 
 # EOF

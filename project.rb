@@ -6,6 +6,9 @@ class Project
   def initialize(name="project", funds=0, goal=25, expire=30)
     @name, @funds, @goal, @expire = name.capitalize, funds, goal, expire
   end
+  def <=>(other)
+    other.funds <=> funds
+  end
   def to_s
     "#{ @name } has $#{ @funds }, $#{difference} to go, and expires in #{ @expire } days."
   end

@@ -17,19 +17,19 @@ describe Fundraiser do
   it "should generously fund the project two times" do
     Die.any_instance.stub(:roll).and_return(1)
 
-    @fundraiser.collect
+    @fundraiser.collect(1)
     @project.funds.should == @initial_funds + 25 + 25
   end
   it "should skip over the project" do
     Die.any_instance.stub(:roll).and_return(3)
 
-    @fundraiser.collect
+    @fundraiser.collect(1)
     @project.funds.should == @initial_funds
   end
   it "should fund the project one time" do
     Die.any_instance.stub(:roll).and_return(5)
 
-    @fundraiser.collect
+    @fundraiser.collect(1)
     @project.funds.should == @initial_funds + 25
   end
 end

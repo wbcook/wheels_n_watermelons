@@ -15,12 +15,37 @@ class Fundraiser
   def add_project(project)
     @projects.push(project)
   end
-  def collect
+  def collect(rounds)
     puts @projects
-    @projects.each do |project|
-      FundingRound.funding_round(project)
-      project.expirer
-      puts "#{project.name} is fully funded!" if project.funded?
+    1.upto(rounds) do |round|
+      puts "\nRound #{round}:"
+      @projects.each do |project|
+        FundingRound.funding_round(project)
+        project.expirer
+        puts "#{project.name} is fully funded!" if project.funded?
+      end
+    end
+    print_stats
+  end
+  def print_name_and_funds(project)
+    puts "#{project.name} (#{project.difference} to goal)"
+  end
+  def print_stats
+        funded_projects, funding_projects = @projects.partition { |project| project.funded? }
+    puts "#\n#{@title} Statistics:"
+
+    puts "\n#{funded_projects.size} funded projects:"
+    funded_projects.each do |project|
+      print_name_and_funds(project)
+    end
+    
+    puts "\n#{funding_projects.size} funding projects:"
+    funding_projects.each do |project|
+      print_name_and_funds(project)
+    end
+    puts "\nFunding Board: "
+    @projects.sort.each do |project|
+      print_name_and_funds(project)
     end
   end
 end
