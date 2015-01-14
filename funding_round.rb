@@ -3,6 +3,8 @@
 ###
 require_relative 'die'
 require_relative 'fundraiser'
+require_relative 'pledge_pool'
+
 module FundingRound
   def self.funding_round(project)
     die = Die.new
@@ -15,5 +17,7 @@ module FundingRound
     else
       project.loan
     end
+    pledge = PledgePool.random
+    puts "#{project.name} got a #{pledge.name} pledge worth #{pledge.amount} dollars."
   end
 end

@@ -6,15 +6,18 @@
 require_relative 'project'
 require_relative 'die'
 require_relative 'funding_round'
+require_relative 'pledge_pool'
 
 class Fundraiser
   def initialize(title)
     @title = title
     @projects = []
   end
+
   def add_project(project)
     @projects.push(project)
   end
+
   def collect(rounds)
     puts @projects
     1.upto(rounds) do |round|
@@ -26,10 +29,17 @@ class Fundraiser
       end
     end
     print_stats
+    pledges = PledgePool::PLEDGES
+    puts "\nThere are #{pledges.size} pledges to be given:"
+    pledges.each do |pledge|
+      puts "A #{pledge.name} pledge is worth #{pledge.amount} dollars"
+    end
   end
+
   def print_name_and_funds(project)
     puts "#{project.name} (#{project.difference} to goal)"
   end
+
   def print_stats
         funded_projects, funding_projects = @projects.partition { |project| project.funded? }
     puts "#\n#{@title} Statistics:"
@@ -48,4 +58,5 @@ class Fundraiser
       print_name_and_funds(project)
     end
   end
+
 end
